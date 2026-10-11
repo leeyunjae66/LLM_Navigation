@@ -1,0 +1,52 @@
+# Semantic goal poses are robot-center poses in the world-aligned `map` frame.
+# `world -> map` is identity; `map -> slam_map` registers GLIM's local origin
+# at the configured initial robot pose (5, 5, 0), yaw 0.
+frame_id: map
+locations:
+  sofa:
+    x: 2.3
+    y: 9.0
+    yaw: 3.14159
+    description: "approach pose in front of the sofa"
+
+  tv:
+    x: 7.3
+    y: 17.8
+    yaw: 1.57080
+    description: "approach pose in front of the TV"
+
+  table:
+    x: 5.2
+    y: 7.8
+    yaw: 1.57080
+    description: "approach pose in front of the table or desk"
+
+  box:
+    x: 0.8
+    y: 17.6
+    yaw: 1.57080
+    description: "approach pose in front of the box in the large room"
+
+  large_room:
+    x: 2.0
+    y: 17.0
+    yaw: 0.0
+    description: "center of the large room"
+
+  small_room:
+    x: 8.75
+    y: 1.5
+    yaw: 0.0
+    description: "center of the small room"
+
+  window_1:
+    x: 4.75
+    y: 1.2
+    yaw: -1.57080
+    description: "approach pose in front of the bottom living room window"
+
+  window_2:
+    x: 8.8
+    y: 11.75
+    yaw: 0.0
+    description: "approach pose in front of the right living room window"

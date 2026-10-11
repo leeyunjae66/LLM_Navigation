@@ -7,8 +7,25 @@ ROS 2 workspace for translating natural-language commands into validated symboli
 - `src/llm_task_planner/llm_task_planner/`: planner, schema, validation, map, and Nav2 modules
 - `src/llm_task_planner/config/semantic_map.yaml`: symbolic locations and example poses
 - `src/llm_task_planner/launch/`: launch descriptions
+- `src/indoor_slam_sim/`: Gazebo Classic indoor world, differential-drive mobile base, Mid-360-pattern LiDAR, IMU, and GLIM configuration
 
-The example coordinates are placeholders. Replace them with poses in your Nav2 map before robot use. The LLM should only return symbolic names; pose lookup and navigation remain deterministic Python responsibilities.
+The semantic goal coordinates are robot-center poses in the indoor simulation's world-aligned `map` frame. See [the simulation README](src/indoor_slam_sim/README.md) for map registration, sensor limitations, build, teleoperation, and SLAM commands. The LLM should only return symbolic names; pose lookup and navigation remain deterministic Python responsibilities. Nav2 servers must be installed and configured separately before dispatching these goals.
+
+## Run the initial NAVIGATE flow
+
+Start Nav2 and Ollama first. The planner defaults to Ollama at `http://localhost:11434` with model `qwen3:14b`; override `ollama_url`, `ollama_model`, or `semantic_map_path` with ROS parameters when needed. The model was selected after a small Korean command check that included an unmapped location.
+
+```bash
+ros2 launch llm_task_planner llm_task_planner.launch.py
+```
+
+Send a command from another sourced ROS 2 terminal:
+
+```bash
+ros2 topic pub --once /natural_language_command std_msgs/msg/String "{data: '책상으로 가줘'}"
+```
+
+The planner publishes a validated JSON object on `/task_plan`. The executor accepts only `NAVIGATE` targets present in the semantic map; `UNKNOWN` plans and invalid plans do not dispatch a Nav2 goal.
 
 ## Build
 
