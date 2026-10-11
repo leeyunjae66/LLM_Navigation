@@ -1,0 +1,15 @@
+# ROS 2 / colcon generated files
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Local environment and editor files
+.venv/
+venv/
+.idea/
+.vscode/
