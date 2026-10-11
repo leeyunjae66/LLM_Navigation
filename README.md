@@ -12,7 +12,7 @@ The example coordinates are placeholders. Replace them with poses in your Nav2 m
 
 ## Run the initial NAVIGATE flow
 
-Start Nav2 and Ollama first. The planner defaults to Ollama at `http://localhost:11434` with model `qwen2.5:7b`; override `ollama_url`, `ollama_model`, or `semantic_map_path` with ROS parameters when needed.
+Start Nav2 and Ollama first. The planner defaults to Ollama at `http://localhost:11434` with model `qwen3:14b`; override `ollama_url`, `ollama_model`, or `semantic_map_path` with ROS parameters when needed. The model was selected after a small Korean command check that included an unmapped location.
 
 ```bash
 ros2 launch llm_task_planner llm_task_planner.launch.py

@@ -9,9 +9,9 @@ def build_prompt(command: str, locations: dict[str, str]) -> str:
     return f"""You convert a user's robot command into exactly one JSON object.
 Return only JSON with exactly these string fields: skill, target.
 Allowed skill: NAVIGATE or UNKNOWN.
-Choose a target only from the available semantic locations below.
-Never output coordinates or invent skills or locations.
-If the command cannot be mapped confidently to one available location, return {{"skill":"UNKNOWN","target":""}}.
+For NAVIGATE, target must exactly match one listed location name. The output schema only permits those names.
+Never translate a location into a new identifier, invent locations or skills, or output coordinates.
+Use UNKNOWN with an empty target if the requested place is not represented by a listed location or cannot be identified confidently.
 
 Available semantic locations:
 {json.dumps(available, ensure_ascii=False)}

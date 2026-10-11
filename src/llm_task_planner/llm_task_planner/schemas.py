@@ -13,6 +13,19 @@ class RobotPlan:
     def to_json(self) -> str:
         return json.dumps(asdict(self), ensure_ascii=False)
 
+    @staticmethod
+    def json_schema(allowed_targets: list[str]) -> dict[str, Any]:
+        """Return a provider-neutral schema with targets limited to the map."""
+        return {
+            "type": "object",
+            "properties": {
+                "skill": {"type": "string", "enum": ["NAVIGATE", "UNKNOWN"]},
+                "target": {"type": "string", "enum": sorted(set(allowed_targets)) + [""]},
+            },
+            "required": ["skill", "target"],
+            "additionalProperties": False,
+        }
+
     @classmethod
     def from_value(cls, value: Any) -> "RobotPlan":
         """Parse a plan object or JSON string without accepting extra fields."""

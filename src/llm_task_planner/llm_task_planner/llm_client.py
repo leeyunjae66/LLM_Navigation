@@ -7,7 +7,7 @@ from typing import Protocol
 
 
 class LLMClient(Protocol):
-    def generate_plan(self, prompt: str) -> str:
+    def generate_plan(self, prompt: str, schema: dict | None = None) -> str:
         """Return the model response containing a plan JSON object."""
 
 
@@ -17,12 +17,12 @@ class OllamaClient:
         self.model = model
         self.timeout_sec = timeout_sec
 
-    def generate_plan(self, prompt: str) -> str:
+    def generate_plan(self, prompt: str, schema: dict | None = None) -> str:
         payload = json.dumps({
             "model": self.model,
             "prompt": prompt,
             "stream": False,
-            "format": "json",
+            "format": schema or "json",
             "options": {"temperature": 0},
         }).encode("utf-8")
         request = urllib.request.Request(

@@ -21,7 +21,7 @@ class PlannerNode(Node):
                           / "config" / "semantic_map.yaml")
         self.declare_parameter("semantic_map_path", default_map)
         self.declare_parameter("ollama_url", "http://localhost:11434")
-        self.declare_parameter("ollama_model", "qwen2.5:7b")
+        self.declare_parameter("ollama_model", "qwen3:14b")
         self.semantic_map = SemanticMap(
             self.get_parameter("semantic_map_path").get_parameter_value().string_value
         )
@@ -41,11 +41,15 @@ class PlannerNode(Node):
             self.get_logger().warning("Ignoring empty natural-language command")
             return
         try:
-            prompt = build_prompt(command, self.semantic_map.get_locations())
-            raw_plan = self.llm.generate_plan(prompt)
+            locations = self.semantic_map.get_locations()
+            prompt = build_prompt(command, locations)
+            raw_plan = self.llm.generate_plan(
+                prompt,
+                schema=RobotPlan.json_schema(list(locations)),
+            )
             plan = validate_plan(
                 RobotPlan.from_value(raw_plan),
-                set(self.semantic_map.get_locations()),
+                set(locations),
             )
         except (RuntimeError, ValueError, PlanValidationError) as exc:
             self.get_logger().error(f"Plan rejected; no task plan published: {exc}")
