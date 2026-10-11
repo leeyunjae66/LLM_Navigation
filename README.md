@@ -7,8 +7,9 @@ ROS 2 workspace for translating natural-language commands into validated symboli
 - `src/llm_task_planner/llm_task_planner/`: planner, schema, validation, map, and Nav2 modules
 - `src/llm_task_planner/config/semantic_map.yaml`: symbolic locations and example poses
 - `src/llm_task_planner/launch/`: launch descriptions
+- `src/indoor_slam_sim/`: Gazebo Classic indoor world, differential-drive mobile base, Mid-360-pattern LiDAR, IMU, and GLIM configuration
 
-The example coordinates are placeholders. Replace them with poses in your Nav2 map before robot use. The LLM should only return symbolic names; pose lookup and navigation remain deterministic Python responsibilities.
+The semantic goal coordinates are robot-center poses in the indoor simulation's world-aligned `map` frame. See [the simulation README](src/indoor_slam_sim/README.md) for map registration, sensor limitations, build, teleoperation, and SLAM commands. The LLM should only return symbolic names; pose lookup and navigation remain deterministic Python responsibilities. Nav2 servers must be installed and configured separately before dispatching these goals.
 
 ## Run the initial NAVIGATE flow
 
