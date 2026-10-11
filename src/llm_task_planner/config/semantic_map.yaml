@@ -1,0 +1,17 @@
+# Replace example poses with coordinates from your robot's map.
+locations:
+  table:
+    x: 2.1
+    y: 3.4
+    yaw: 0.0
+    description: "table or desk"
+  chair:
+    x: 1.0
+    y: 2.0
+    yaw: 1.57
+    description: "chair"
+  professor_room:
+    x: 12.5
+    y: 7.2
+    yaw: 3.14
+    description: "professor's office"
